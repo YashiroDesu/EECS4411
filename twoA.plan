@@ -1,0 +1,8 @@
+                                 QUERY PLAN                                 
+----------------------------------------------------------------------------
+ Hash Join  (cost=1569.00..191462.93 rows=9997204 width=60)
+   Hash Cond: (p.bookid = b.bookid)
+   ->  Seq Scan on purchase p  (cost=0.00..163649.04 rows=9997204 width=22)
+   ->  Hash  (cost=944.00..944.00 rows=50000 width=38)
+         ->  Seq Scan on book b  (cost=0.00..944.00 rows=50000 width=38)
+(5 rows)

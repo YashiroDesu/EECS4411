@@ -1,0 +1,8 @@
+oneA: Since customer table has index on custid, a simple index-only scan will find the mathcing one.
+oneB: The != require a file scan to the entire table.
+twoA: Since bookid is unsorted and unclustered, hashjoin is the fastest way perform join.
+twoB: The query only interested in purchase record with on bookid with language = 'Japanese', this will force a file scan on the book table. Thus, optimizer will match p.bookid and b.bookid in INLJ style.
+threeA: The query interested in the the total for each book sold during the given period. Since bookid is not sorted. The optimizer will use HashAggregate to aggregate bookid.
+threeB: Added a predicate to find order with qnty = 10. The bookid got sorted during this step. Thus the optimizer choose groupaggregate.
+four: Filtered the purchase table with count(*) > 70 first. Which reduced the size of the outer table significantly.
+five: Created two tmp table as advised. This reduced the size of both outer and inner table.

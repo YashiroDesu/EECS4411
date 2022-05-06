@@ -1,0 +1,9 @@
+                                         QUERY PLAN
+---------------------------------------------------------------------------------------------
+ HashAggregate  (cost=47489.58..47628.54 rows=11117 width=36)
+   Group Key: bookid
+   ->  Bitmap Heap Scan on purchase  (cost=330.61..47369.49 rows=24017 width=10)
+         Recheck Cond: ((whenp >= '2012-01-01'::date) AND (whenp <= '2012-01-31'::date))
+         ->  Bitmap Index Scan on stl_pur_ind_when  (cost=0.00..324.61 rows=24017 width=0)
+               Index Cond: ((whenp >= '2012-01-01'::date) AND (whenp <= '2012-01-31'::date))
+(6 rows)

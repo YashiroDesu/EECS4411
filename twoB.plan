@@ -1,0 +1,8 @@
+                                         QUERY PLAN
+---------------------------------------------------------------------------------------------
+ Nested Loop  (cost=0.43..141007.33 rows=663414 width=60)
+   ->  Seq Scan on book b  (cost=0.00..1069.00 rows=3318 width=38)
+         Filter: ((language)::text = 'Japanese'::text)
+   ->  Index Scan using stl_pur_ind_book on purchase p  (cost=0.43..34.66 rows=752 width=22)
+         Index Cond: (bookid = b.bookid)
+(5 rows)

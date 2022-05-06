@@ -1,0 +1,5 @@
+                          QUERY PLAN                           
+---------------------------------------------------------------
+ Seq Scan on customer  (cost=0.00..1986.00 rows=99999 width=4)
+   Filter: (custid <> 100)
+(2 rows)

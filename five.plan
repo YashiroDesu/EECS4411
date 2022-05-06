@@ -1,0 +1,23 @@
+                                                                                       QUERY PLAN
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Hash Join  (cost=75034.55..75775.00 rows=1 width=4)
+   Hash Cond: (((b.language)::text = (book.language)::text) AND ((b.genre)::text = (book.genre)::text) AND ((b.publisher)::text = (book.publisher)::text) AND ((count(*)) = (count(*))))
+   ->  HashAggregate  (cost=73430.45..73673.22 rows=24277 width=40)
+         Group Key: p.custid, b.language, b.genre, b.publisher, count(*)
+         ->  HashAggregate  (cost=72216.60..73126.99 rows=24277 width=40)
+               Group Key: p.custid, b.language, b.genre, b.publisher
+               Filter: (count(*) > 10)
+               ->  Hash Join  (cost=3257.88..71124.14 rows=72831 width=32)
+                     Hash Cond: (p.bookid = b.bookid)
+                     ->  Bitmap Heap Scan on purchase p  (cost=1688.88..69363.94 rows=72831 width=8)
+                           Recheck Cond: (custid < 500)
+                           ->  Bitmap Index Scan on stl_purchase_pk  (cost=0.00..1670.67 rows=72831 width=0)
+                                 Index Cond: (custid < 500)
+                     ->  Hash  (cost=944.00..944.00 rows=50000 width=32)
+                           ->  Seq Scan on book b  (cost=0.00..944.00 rows=50000 width=32)
+   ->  Hash  (cost=1593.70..1593.70 rows=520 width=36)
+         ->  HashAggregate  (cost=1569.00..1588.50 rows=520 width=36)
+               Group Key: book.language, book.genre, book.publisher
+               Filter: (count(*) > 10)
+               ->  Seq Scan on book  (cost=0.00..944.00 rows=50000 width=28)
+(20 rows)

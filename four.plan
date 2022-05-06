@@ -1,0 +1,12 @@
+
+                                   QUERY PLAN
+--------------------------------------------------------------------------------
+ Hash Join  (cost=265190.08..281893.81 rows=333240 width=32)
+   Hash Cond: (purchase.bookid = b.bookid)
+   ->  HashAggregate  (cost=263621.08..276117.58 rows=333240 width=16)
+         Group Key: purchase.custid, purchase.bookid
+         Filter: (count(*) > 70)
+         ->  Seq Scan on purchase  (cost=0.00..163649.04 rows=9997204 width=12)
+   ->  Hash  (cost=944.00..944.00 rows=50000 width=20)
+         ->  Seq Scan on book b  (cost=0.00..944.00 rows=50000 width=20)
+(8 rows)
